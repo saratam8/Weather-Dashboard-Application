@@ -3,13 +3,21 @@
 
 // http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
 
-var button = document.getElementsByClassName('.btn-primary');
-var input = document.getElementById('#input');
+var button = document.querySelector('.btn-primary');
+var input = document.querySelector('#input');
 
-var city = 'Chicago';
+var getCity = function(event){
+    event.preventDefault();
 
-function geoCodeApi(){
-    var geoUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=Chicago,US&limit=5&appid=c3cf83153cc5621fca54b5f97fc73909';
+    var city = input.value;
+    console.log(city);
+    geoCodeApi(city);
+}
+
+button.addEventListener('click', getCity);
+
+function geoCodeApi(city){
+    var geoUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + ',US&limit=5&appid=c3cf83153cc5621fca54b5f97fc73909';
 
     console.log('here');
 
@@ -43,5 +51,3 @@ function weatherApi(coordinates){
             console.log(data);
         });
 }
-
-geoCodeApi();
