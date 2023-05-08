@@ -4,6 +4,7 @@
 
 var button = document.querySelector('.btn-primary');
 var input = document.querySelector('#input');
+var citiesEl = document.getElementById('cities');
 var apiKey;
 
 var getCity = function(event){
@@ -11,10 +12,24 @@ var getCity = function(event){
 
     var city = input.value;
     console.log(city);
-    geoCodeApi(city);
+    // geoCodeApi(city);
+    input.value = " ";
+    saveSearch(city);
 }
 
 button.addEventListener('click', getCity);
+
+function saveSearch(cityName){
+    console.log(citiesEl);
+    console.log(cityName);
+    var saved = document.createElement('button');
+    saved.textContent = cityName;
+    saved.setAttribute("class", "btn btn-secondary btn-sm col-8 m-1");
+    saved.setAttribute("type", "button");
+    saved.setAttribute("id", cityName);
+
+    citiesEl.appendChild(saved);
+}
 
 function geoCodeApi(city){
     var geoUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + ',US&limit=5&appid=' + apiKey;
