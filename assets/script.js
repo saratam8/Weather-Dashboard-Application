@@ -1,5 +1,4 @@
 // https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
-// c3cf83153cc5621fca54b5f97fc73909
 
 // http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
 
@@ -17,7 +16,7 @@ var getCity = function(event){
 button.addEventListener('click', getCity);
 
 function geoCodeApi(city){
-    var geoUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + ',US&limit=5&appid=c3cf83153cc5621fca54b5f97fc73909';
+    var geoUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + ',US&limit=5&appid=';
 
     console.log('here');
 
@@ -38,7 +37,7 @@ function geoCodeApi(city){
 }
 
 function weatherApi(coordinates){
-    var weatherUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + coordinates[0] + '&lon=' + coordinates[1] + '&appid=c3cf83153cc5621fca54b5f97fc73909'
+    var weatherUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + coordinates[0] + '&lon=' + coordinates[1] + '&appid='
 
     // console.log(coordinates[0]);
     // console.log(coordinates[1]);
@@ -49,5 +48,10 @@ function weatherApi(coordinates){
         })
         .then(function(data){
             console.log(data);
+            console.log(data.city.name);
+            console.log((data.list[0].main.temp - 273.15)*9/5 +32); //convert kelvins to fahrenheit
+            console.log(data.list[0].main.humidity);
+            console.log(data.list[0].weather[0].description);
+            console.log(data.list[0].wind.speed);
         });
 }
