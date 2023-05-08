@@ -4,6 +4,7 @@
 
 var button = document.querySelector('.btn-primary');
 var input = document.querySelector('#input');
+var apiKey;
 
 var getCity = function(event){
     event.preventDefault();
@@ -16,7 +17,7 @@ var getCity = function(event){
 button.addEventListener('click', getCity);
 
 function geoCodeApi(city){
-    var geoUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + ',US&limit=5&appid=';
+    var geoUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + ',US&limit=5&appid=' + apiKey;
 
     console.log('here');
 
@@ -37,7 +38,7 @@ function geoCodeApi(city){
 }
 
 function weatherApi(coordinates){
-    var weatherUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + coordinates[0] + '&lon=' + coordinates[1] + '&appid='
+    var weatherUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + coordinates[0] + '&lon=' + coordinates[1] + '&appid=' + apiKey;
 
     // console.log(coordinates[0]);
     // console.log(coordinates[1]);
