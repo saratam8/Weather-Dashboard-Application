@@ -55,7 +55,7 @@ function geoCodeApi(city){
 }
 
 function weatherApi(coordinates){
-    var weatherUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + coordinates[0] + '&lon=' + coordinates[1] + '&appid=' + apiKey;
+    var weatherUrl = 'https://api.openweathermap.org/data/2.5/weather?lat=' + coordinates[0] + '&lon=' + coordinates[1] + '&units=imperial' +'&appid=' + apiKey;
 
     // console.log(coordinates[0]);
     // console.log(coordinates[1]);
@@ -66,19 +66,20 @@ function weatherApi(coordinates){
         })
         .then(function(data){
             console.log(data);
-            console.log(data.city.name);
-            cardHeaderEl.textContent = data.city.name;
+            console.log(data.name);
+            cardHeaderEl.textContent = data.name;
 
-            var tempFah = (data.list[0].main.temp - 273.15)*9/5 +32;
-            tempFah = tempFah.toFixed(2);
-            var windSpeed = data.list[0].wind.speed;
-            var humidity = data.list[0].main.humidity;
-            var description = data.list[0].weather[0].description;
+            var temp = data.main.temp;
+            // var temp = (data.list[0].main.temp - 273.15)*9/5 +32;
+            // temp = temp.toFixed(2);
+            var windSpeed = data.wind.speed;
+            var humidity = data.main.humidity;
+            var description = data.weather[0].main;
 
-            console.log((data.list[0].main.temp - 273.15)*9/5 +32); //convert kelvins to fahrenheit
-            console.log(data.list[0].main.humidity);
-            console.log(data.list[0].weather[0].description);
-            console.log(data.list[0].wind.speed);
-            currentWeatherEl.innerHTML = `Temp: ${tempFah} °F <br /> Wind: ${windSpeed} mph <br /> Humidity: ${humidity} %`;
+            console.log(temp);
+            console.log(windSpeed);
+            console.log(humidity);
+            console.log(description);
+            currentWeatherEl.innerHTML = `Temp: ${temp} °F <br /> Wind: ${windSpeed} mph <br /> Humidity: ${humidity} %`;
         });
 }
