@@ -50,15 +50,13 @@ function geoCodeApi(city){
             coord[0] = data[0].lat;
             coord[1] = data[0].lon;
             weatherApi(coord);
+            forecastApi(coord);
         });
 
 }
 
 function weatherApi(coordinates){
     var weatherUrl = 'https://api.openweathermap.org/data/2.5/weather?lat=' + coordinates[0] + '&lon=' + coordinates[1] + '&units=imperial' +'&appid=' + apiKey;
-
-    // console.log(coordinates[0]);
-    // console.log(coordinates[1]);
 
     fetch(weatherUrl)
         .then(function (response){
@@ -67,19 +65,55 @@ function weatherApi(coordinates){
         .then(function(data){
             console.log(data);
             console.log(data.name);
-            cardHeaderEl.textContent = data.name;
 
             var temp = data.main.temp;
-            // var temp = (data.list[0].main.temp - 273.15)*9/5 +32;
-            // temp = temp.toFixed(2);
             var windSpeed = data.wind.speed;
             var humidity = data.main.humidity;
+
             var description = data.weather[0].main;
+            var unix = data.dt;
+            // var unixToMilliseconds = unix * 1000;
+            var currentDate = new Date(unix * 1000);
+            var month = currentDate.getMonth();
+            var date = currentDate.getDate();
+            var year = currentDate.getFullYear();
+
+            console.log(currentDate);
+            console.log(month);
+            console.log(date);
+            console.log(year);
 
             console.log(temp);
             console.log(windSpeed);
             console.log(humidity);
             console.log(description);
+
+            cardHeaderEl.textContent = `${data.name}  ${month}/${date}/${year}`;
             currentWeatherEl.innerHTML = `Temp: ${temp} °F <br /> Wind: ${windSpeed} mph <br /> Humidity: ${humidity} %`;
+        });
+}
+
+function forecastApi(coordinates){
+    var forecastUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + coordinates[0] + '&lon=' + coordinates[1] + '&units=imperial' +'&appid=' + apiKey;
+
+    fetch(forecastUrl)
+        .then(function (response){
+            return response.json();
+        })
+        .then(function(data){
+            console.log(data);
+            // console.log(data.name);
+            // cardHeaderEl.textContent = data.name;
+
+            // var temp = data.main.temp;
+            // var windSpeed = data.wind.speed;
+            // var humidity = data.main.humidity;
+            // var description = data.weather[0].main;
+
+            // console.log(temp);
+            // console.log(windSpeed);
+            // console.log(humidity);
+            // console.log(description);
+            // currentWeatherEl.innerHTML = `Temp: ${temp} °F <br /> Wind: ${windSpeed} mph <br /> Humidity: ${humidity} %`;
         });
 }
