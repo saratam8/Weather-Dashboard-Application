@@ -5,14 +5,16 @@
 var button = document.querySelector('.btn-primary');
 var input = document.querySelector('#input');
 var citiesEl = document.getElementById('cities');
-var apiKey;
+var cardHeaderEl = document.getElementById('header-today');
+var currentWeatherEl = document.getElementById('weather-today');
+var apiKey = 'cef7710a3e1c8dc71a4ec2409ad5949f';
 
 var getCity = function(event){
     event.preventDefault();
 
     var city = input.value;
-    console.log(city);
-    // geoCodeApi(city);
+    // console.log(city);
+    geoCodeApi(city);
     input.value = " ";
     saveSearch(city);
 }
@@ -34,7 +36,7 @@ function saveSearch(cityName){
 function geoCodeApi(city){
     var geoUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + ',US&limit=5&appid=' + apiKey;
 
-    console.log('here');
+    // console.log('here');
 
     fetch(geoUrl)
         .then(function (response){
@@ -65,9 +67,18 @@ function weatherApi(coordinates){
         .then(function(data){
             console.log(data);
             console.log(data.city.name);
+            cardHeaderEl.textContent = data.city.name;
+
+            var tempFah = (data.list[0].main.temp - 273.15)*9/5 +32;
+            tempFah = tempFah.toFixed(2);
+            var windSpeed = data.list[0].wind.speed;
+            var humidity = data.list[0].main.humidity;
+            var description = data.list[0].weather[0].description;
+
             console.log((data.list[0].main.temp - 273.15)*9/5 +32); //convert kelvins to fahrenheit
             console.log(data.list[0].main.humidity);
             console.log(data.list[0].weather[0].description);
             console.log(data.list[0].wind.speed);
+            currentWeatherEl.innerHTML = `Temp: ${tempFah} °F <br /> Wind: ${windSpeed} mph <br /> Humidity: ${humidity} %`;
         });
 }
