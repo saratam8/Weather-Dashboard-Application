@@ -9,6 +9,27 @@ var cardTitle = document.querySelectorAll('.card-title');
 var currentIcon = document.getElementById('card-title-main');
 var apiKey = 'cef7710a3e1c8dc71a4ec2409ad5949f';
 
+var index = 0;
+
+// this if statement checks if there is already a search history in localStorage. If there is, then create the buttons for each previously searched city
+if (localStorage.length){
+    for(var i = 0; i < localStorage.length; i++){
+        var saved = document.createElement('button');
+        saved.textContent = localStorage.getItem("key"+i);
+        saved.setAttribute("class", "btn btn-secondary btn-sm col-8 m-1");
+        saved.setAttribute("type", "button");
+        saved.setAttribute("id", localStorage.getItem("key"+i));
+
+        citiesEl.appendChild(saved);
+        savedbutton = document.querySelectorAll('.btn-secondary');
+        savedbutton[i].addEventListener('click', function getHistory(event){
+            event.preventDefault();
+            var savedName = this.id;
+            geoCodeApi(savedName);
+        });
+    }
+}
+
 // This function will take the user's input and pass the city name into geoCodeApi function and saveSearch function
 function getCity(event){
     event.preventDefault();
@@ -32,6 +53,9 @@ function saveSearch(cityName){
 
     citiesEl.appendChild(saved);
     savedbutton = document.querySelectorAll('.btn-secondary');
+
+    localStorage.setItem("key"+index, cityName);
+    index++;
 
     // For each saved search, there is an event listener for each of those buttons and when clicked, will get openweatherapp api data for the corresponding city
     for(var i = 0; i < savedbutton.length; i++){
