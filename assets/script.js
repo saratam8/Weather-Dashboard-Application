@@ -1,5 +1,4 @@
 var button = document.querySelector('.btn-primary');
-var savedbutton = document.querySelectorAll('.btn-secondary');
 var input = document.querySelector('#input');
 var citiesEl = document.getElementById('cities');
 var cardHeaderEl = document.getElementById('header-today');
@@ -29,19 +28,20 @@ function saveSearch(cityName){
     saved.setAttribute("id", cityName);
 
     citiesEl.appendChild(saved);
-    localStorage.setItem(cityName, cityName);
+    // localStorage.setItem(cityName, cityName);
+    savedbutton = document.querySelectorAll('.btn-secondary');
+    console.log(savedbutton);
+
+    console.log(this);
+    for(var i = 0; i < savedbutton.length; i++){
+            savedbutton[i].addEventListener('click', function getHistory(){
+            console.log(this.id);
+            var savedName = this.id;
+            geoCodeApi(savedName);
+        });
+    }
+
 }
-
-// savedbutton.addEventListener('click', getHistory);
-
-// function getHistory(event){
-//     event.preventDefault();
-
-//     var cityName = this.attribute('id');    
-//     var city = localStorage.getItem(cityName);
-//     console.log(city);
-// }
-
 
 function geoCodeApi(city){
     var geoUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + city + ',US&limit=5&appid=' + apiKey;
@@ -68,6 +68,7 @@ function weatherApi(coordinates){
             return response.json();
         })
         .then(function(data){
+            console.log(data);
 
             var temp = data.main.temp;
             var windSpeed = data.wind.speed;
