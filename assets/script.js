@@ -1,34 +1,16 @@
-// https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
-
-// http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
-
 var button = document.querySelector('.btn-primary');
+var savedbutton = document.querySelectorAll('.btn-secondary');
 var input = document.querySelector('#input');
 var citiesEl = document.getElementById('cities');
 var cardHeaderEl = document.getElementById('header-today');
 var currentWeatherEl = document.getElementById('weather-today');
-var forecast1 = document.getElementById('forecast1');
-var forecast2 = document.getElementById('forecast2');
-var forecast3 = document.getElementById('forecast3');
-var forecast4 = document.getElementById('forecast4');
-var forecast5 = document.getElementById('forecast5');
-var date1 = document.getElementById('date1');
-var date2 = document.getElementById('date2');
-var date3 = document.getElementById('date3');
-var date4 = document.getElementById('date4');
-var date5 = document.getElementById('date5');
-var icon1 = document.getElementById('icon1');
-var icon2 = document.getElementById('icon2');
-var icon3 = document.getElementById('icon3');
-var icon4 = document.getElementById('icon4');
-var icon5 = document.getElementById('icon5');
+var forecastEl = document.querySelectorAll('.card-text');
+var forecastDate = document.querySelectorAll('.card-header');
+var cardTitle = document.querySelectorAll('.card-title');
 var currentIcon = document.getElementById('card-title-main');
-var forecastArray = [forecast1, forecast2, forecast3, forecast4, forecast5];
-var forecastDate = [date1, date2, date3, date4, date5];
-var iconArray = [icon1, icon2, icon3, icon4, icon5];
 var apiKey = 'cef7710a3e1c8dc71a4ec2409ad5949f';
 
-var getCity = function(event){
+function getCity(event){
     event.preventDefault();
 
     var city = input.value;
@@ -47,7 +29,19 @@ function saveSearch(cityName){
     saved.setAttribute("id", cityName);
 
     citiesEl.appendChild(saved);
+    localStorage.setItem(cityName, cityName);
 }
+
+// savedbutton.addEventListener('click', getHistory);
+
+// function getHistory(event){
+//     event.preventDefault();
+
+//     var cityName = this.attribute('id');    
+//     var city = localStorage.getItem(cityName);
+//     console.log(city);
+// }
+
 
 function geoCodeApi(city){
     var geoUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + city + ',US&limit=5&appid=' + apiKey;
@@ -118,8 +112,8 @@ function forecastApi(coordinates){
                     var description = data.list[i].weather[0].main;
 
                     forecastDate[j].innerHTML = `${cityName}  ${month}/${date}/${year}`;
-                    forecastArray[j].innerHTML = `Temp: ${temp} °F <br /> Wind: ${windSpeed} mph <br /> Humidity: ${humidity} %`;
-                    iconArray[j].src = getIcon(description);
+                    forecastEl[j].innerHTML = `Temp: ${temp} °F <br /> Wind: ${windSpeed} mph <br /> Humidity: ${humidity} %`;
+                    cardTitle[j].src = getIcon(description);
 
                     j++;
 
