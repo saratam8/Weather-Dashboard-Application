@@ -12,7 +12,7 @@ var apiKey = 'cef7710a3e1c8dc71a4ec2409ad5949f';
 var index = 0;
 
 // this if statement checks if there is already a search history in localStorage. If there is, then create the buttons for each previously searched city
-if (localStorage.length){
+if (localStorage.length != 0){
     for(var i = 0; i < localStorage.length; i++){
         var saved = document.createElement('button');
         saved.textContent = localStorage.getItem("key"+i);
