@@ -28,14 +28,10 @@ function saveSearch(cityName){
     saved.setAttribute("id", cityName);
 
     citiesEl.appendChild(saved);
-    // localStorage.setItem(cityName, cityName);
     savedbutton = document.querySelectorAll('.btn-secondary');
-    console.log(savedbutton);
 
-    console.log(this);
     for(var i = 0; i < savedbutton.length; i++){
             savedbutton[i].addEventListener('click', function getHistory(){
-            console.log(this.id);
             var savedName = this.id;
             geoCodeApi(savedName);
         });
@@ -68,8 +64,6 @@ function weatherApi(coordinates){
             return response.json();
         })
         .then(function(data){
-            console.log(data);
-
             var temp = data.main.temp;
             var windSpeed = data.wind.speed;
             var humidity = data.main.humidity;
