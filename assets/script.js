@@ -138,4 +138,7 @@ function getIcon(description){
     else if (description == "Thunderstorm"){
         return "./assets/images/thunderstorm.png";
     }
+    else{
+        return "./assets/images/atmosphere.png";
+    }
 }
